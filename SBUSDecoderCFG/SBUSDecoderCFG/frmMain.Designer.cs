@@ -30,11 +30,36 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.BtnDefault = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.btnWrite = new System.Windows.Forms.Button();
             this.btnRead = new System.Windows.Forms.Button();
             this.cbPorts = new System.Windows.Forms.ComboBox();
             this.COMPort = new System.IO.Ports.SerialPort(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkSW = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkCH8 = new System.Windows.Forms.CheckBox();
+            this.chkCH7 = new System.Windows.Forms.CheckBox();
+            this.chkCH6 = new System.Windows.Forms.CheckBox();
+            this.chkCH5 = new System.Windows.Forms.CheckBox();
+            this.chkCH4 = new System.Windows.Forms.CheckBox();
+            this.chkCH3 = new System.Windows.Forms.CheckBox();
+            this.chkCH2 = new System.Windows.Forms.CheckBox();
+            this.chkCH1 = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chkCH9 = new System.Windows.Forms.CheckBox();
+            this.chkCH16 = new System.Windows.Forms.CheckBox();
+            this.chkCH15 = new System.Windows.Forms.CheckBox();
+            this.chkCH10 = new System.Windows.Forms.CheckBox();
+            this.chkCH14 = new System.Windows.Forms.CheckBox();
+            this.chkCH11 = new System.Windows.Forms.CheckBox();
+            this.chkCH13 = new System.Windows.Forms.CheckBox();
+            this.chkCH12 = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbChB16 = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -74,7 +99,6 @@
             this.cbFrameB = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
             this.chkPPMB = new System.Windows.Forms.CheckBox();
-            this.splitter1 = new System.Windows.Forms.Splitter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbChA16 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -115,27 +139,95 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkPPMA = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.groupBox6);
+            this.panel1.Controls.Add(this.BtnDefault);
+            this.panel1.Controls.Add(this.richTextBox1);
             this.panel1.Controls.Add(this.btnWrite);
             this.panel1.Controls.Add(this.btnRead);
             this.panel1.Controls.Add(this.cbPorts);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(146, 272);
+            this.panel1.Size = new System.Drawing.Size(146, 402);
             this.panel1.TabIndex = 0;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.radioButton2);
+            this.groupBox6.Controls.Add(this.radioButton1);
+            this.groupBox6.Location = new System.Drawing.Point(13, 307);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(120, 89);
+            this.groupBox6.TabIndex = 5;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Version";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(7, 44);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(110, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "V3 (with switches)";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(7, 20);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(38, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "V2";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // BtnDefault
+            // 
+            this.BtnDefault.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BtnDefault.Location = new System.Drawing.Point(12, 266);
+            this.BtnDefault.Name = "BtnDefault";
+            this.BtnDefault.Size = new System.Drawing.Size(121, 23);
+            this.BtnDefault.TabIndex = 4;
+            this.BtnDefault.Text = "Load Defaults";
+            this.BtnDefault.UseVisualStyleBackColor = true;
+            this.BtnDefault.Click += new System.EventHandler(this.BtnDefault_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Menu;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Enabled = false;
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox1.Location = new System.Drawing.Point(12, 107);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox1.Size = new System.Drawing.Size(128, 153);
+            this.richTextBox1.TabIndex = 3;
+            this.richTextBox1.Text = "Enable PC setting mode：\nPC_EN (A4)<-->GND\n\nFlashing mode：\nremove S.Bus signal\n\nFT" +
+    "DI Connection:\n TX<-->RX\n RX<-->TX\n VCC<-->VCC(5V/3.3V)\n GND<-->GND";
             // 
             // btnWrite
             // 
             this.btnWrite.Location = new System.Drawing.Point(12, 77);
             this.btnWrite.Name = "btnWrite";
-            this.btnWrite.Size = new System.Drawing.Size(75, 23);
+            this.btnWrite.Size = new System.Drawing.Size(121, 23);
             this.btnWrite.TabIndex = 2;
             this.btnWrite.Text = "Write";
             this.btnWrite.UseVisualStyleBackColor = true;
@@ -145,7 +237,7 @@
             // 
             this.btnRead.Location = new System.Drawing.Point(12, 48);
             this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(75, 23);
+            this.btnRead.Size = new System.Drawing.Size(121, 23);
             this.btnRead.TabIndex = 1;
             this.btnRead.Text = "Read";
             this.btnRead.UseVisualStyleBackColor = true;
@@ -163,14 +255,233 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.groupBox5);
             this.panel2.Controls.Add(this.groupBox2);
-            this.panel2.Controls.Add(this.splitter1);
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(146, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(585, 272);
+            this.panel2.Size = new System.Drawing.Size(531, 402);
             this.panel2.TabIndex = 1;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.chkSW);
+            this.groupBox5.Controls.Add(this.groupBox3);
+            this.groupBox5.Controls.Add(this.groupBox4);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox5.Location = new System.Drawing.Point(0, 264);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(531, 136);
+            this.groupBox5.TabIndex = 45;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Switches";
+            // 
+            // chkSW
+            // 
+            this.chkSW.AutoSize = true;
+            this.chkSW.Location = new System.Drawing.Point(51, 19);
+            this.chkSW.Name = "chkSW";
+            this.chkSW.Size = new System.Drawing.Size(56, 17);
+            this.chkSW.TabIndex = 45;
+            this.chkSW.Text = "Active";
+            this.chkSW.UseVisualStyleBackColor = true;
+            this.chkSW.CheckedChanged += new System.EventHandler(this.chkSW_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.chkCH8);
+            this.groupBox3.Controls.Add(this.chkCH7);
+            this.groupBox3.Controls.Add(this.chkCH6);
+            this.groupBox3.Controls.Add(this.chkCH5);
+            this.groupBox3.Controls.Add(this.chkCH4);
+            this.groupBox3.Controls.Add(this.chkCH3);
+            this.groupBox3.Controls.Add(this.chkCH2);
+            this.groupBox3.Controls.Add(this.chkCH1);
+            this.groupBox3.Location = new System.Drawing.Point(6, 42);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(250, 90);
+            this.groupBox3.TabIndex = 43;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Switches A";
+            // 
+            // chkCH8
+            // 
+            this.chkCH8.AutoSize = true;
+            this.chkCH8.Enabled = false;
+            this.chkCH8.Location = new System.Drawing.Point(190, 42);
+            this.chkCH8.Name = "chkCH8";
+            this.chkCH8.Size = new System.Drawing.Size(44, 17);
+            this.chkCH8.TabIndex = 21;
+            this.chkCH8.Text = "ch8";
+            this.chkCH8.UseVisualStyleBackColor = true;
+            // 
+            // chkCH7
+            // 
+            this.chkCH7.AutoSize = true;
+            this.chkCH7.Location = new System.Drawing.Point(190, 19);
+            this.chkCH7.Name = "chkCH7";
+            this.chkCH7.Size = new System.Drawing.Size(44, 17);
+            this.chkCH7.TabIndex = 20;
+            this.chkCH7.Text = "ch7";
+            this.chkCH7.UseVisualStyleBackColor = true;
+            // 
+            // chkCH6
+            // 
+            this.chkCH6.AutoSize = true;
+            this.chkCH6.Location = new System.Drawing.Point(105, 65);
+            this.chkCH6.Name = "chkCH6";
+            this.chkCH6.Size = new System.Drawing.Size(44, 17);
+            this.chkCH6.TabIndex = 19;
+            this.chkCH6.Text = "ch6";
+            this.chkCH6.UseVisualStyleBackColor = true;
+            // 
+            // chkCH5
+            // 
+            this.chkCH5.AutoSize = true;
+            this.chkCH5.Location = new System.Drawing.Point(105, 42);
+            this.chkCH5.Name = "chkCH5";
+            this.chkCH5.Size = new System.Drawing.Size(44, 17);
+            this.chkCH5.TabIndex = 18;
+            this.chkCH5.Text = "ch5";
+            this.chkCH5.UseVisualStyleBackColor = true;
+            // 
+            // chkCH4
+            // 
+            this.chkCH4.AutoSize = true;
+            this.chkCH4.Location = new System.Drawing.Point(105, 19);
+            this.chkCH4.Name = "chkCH4";
+            this.chkCH4.Size = new System.Drawing.Size(44, 17);
+            this.chkCH4.TabIndex = 17;
+            this.chkCH4.Text = "ch4";
+            this.chkCH4.UseVisualStyleBackColor = true;
+            // 
+            // chkCH3
+            // 
+            this.chkCH3.AutoSize = true;
+            this.chkCH3.Location = new System.Drawing.Point(21, 65);
+            this.chkCH3.Name = "chkCH3";
+            this.chkCH3.Size = new System.Drawing.Size(44, 17);
+            this.chkCH3.TabIndex = 16;
+            this.chkCH3.Text = "ch3";
+            this.chkCH3.UseVisualStyleBackColor = true;
+            // 
+            // chkCH2
+            // 
+            this.chkCH2.AutoSize = true;
+            this.chkCH2.Location = new System.Drawing.Point(21, 42);
+            this.chkCH2.Name = "chkCH2";
+            this.chkCH2.Size = new System.Drawing.Size(44, 17);
+            this.chkCH2.TabIndex = 15;
+            this.chkCH2.Text = "ch2";
+            this.chkCH2.UseVisualStyleBackColor = true;
+            // 
+            // chkCH1
+            // 
+            this.chkCH1.AutoSize = true;
+            this.chkCH1.Location = new System.Drawing.Point(21, 19);
+            this.chkCH1.Name = "chkCH1";
+            this.chkCH1.Size = new System.Drawing.Size(44, 17);
+            this.chkCH1.TabIndex = 14;
+            this.chkCH1.Text = "ch1";
+            this.chkCH1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.chkCH9);
+            this.groupBox4.Controls.Add(this.chkCH16);
+            this.groupBox4.Controls.Add(this.chkCH15);
+            this.groupBox4.Controls.Add(this.chkCH10);
+            this.groupBox4.Controls.Add(this.chkCH14);
+            this.groupBox4.Controls.Add(this.chkCH11);
+            this.groupBox4.Controls.Add(this.chkCH13);
+            this.groupBox4.Controls.Add(this.chkCH12);
+            this.groupBox4.Location = new System.Drawing.Point(262, 42);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(269, 90);
+            this.groupBox4.TabIndex = 44;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Switches B";
+            // 
+            // chkCH9
+            // 
+            this.chkCH9.AutoSize = true;
+            this.chkCH9.Location = new System.Drawing.Point(18, 19);
+            this.chkCH9.Name = "chkCH9";
+            this.chkCH9.Size = new System.Drawing.Size(59, 17);
+            this.chkCH9.TabIndex = 22;
+            this.chkCH9.Text = "ch1 (9)";
+            this.chkCH9.UseVisualStyleBackColor = true;
+            // 
+            // chkCH16
+            // 
+            this.chkCH16.AutoSize = true;
+            this.chkCH16.Location = new System.Drawing.Point(187, 42);
+            this.chkCH16.Name = "chkCH16";
+            this.chkCH16.Size = new System.Drawing.Size(65, 17);
+            this.chkCH16.TabIndex = 29;
+            this.chkCH16.Text = "ch8 (16)";
+            this.chkCH16.UseVisualStyleBackColor = true;
+            // 
+            // chkCH15
+            // 
+            this.chkCH15.AutoSize = true;
+            this.chkCH15.Location = new System.Drawing.Point(187, 19);
+            this.chkCH15.Name = "chkCH15";
+            this.chkCH15.Size = new System.Drawing.Size(65, 17);
+            this.chkCH15.TabIndex = 28;
+            this.chkCH15.Text = "ch7 (15)";
+            this.chkCH15.UseVisualStyleBackColor = true;
+            // 
+            // chkCH10
+            // 
+            this.chkCH10.AutoSize = true;
+            this.chkCH10.Location = new System.Drawing.Point(18, 42);
+            this.chkCH10.Name = "chkCH10";
+            this.chkCH10.Size = new System.Drawing.Size(65, 17);
+            this.chkCH10.TabIndex = 23;
+            this.chkCH10.Text = "ch2 (10)";
+            this.chkCH10.UseVisualStyleBackColor = true;
+            // 
+            // chkCH14
+            // 
+            this.chkCH14.AutoSize = true;
+            this.chkCH14.Location = new System.Drawing.Point(102, 65);
+            this.chkCH14.Name = "chkCH14";
+            this.chkCH14.Size = new System.Drawing.Size(65, 17);
+            this.chkCH14.TabIndex = 27;
+            this.chkCH14.Text = "ch6 (14)";
+            this.chkCH14.UseVisualStyleBackColor = true;
+            // 
+            // chkCH11
+            // 
+            this.chkCH11.AutoSize = true;
+            this.chkCH11.Location = new System.Drawing.Point(18, 65);
+            this.chkCH11.Name = "chkCH11";
+            this.chkCH11.Size = new System.Drawing.Size(65, 17);
+            this.chkCH11.TabIndex = 24;
+            this.chkCH11.Text = "ch3 (11)";
+            this.chkCH11.UseVisualStyleBackColor = true;
+            // 
+            // chkCH13
+            // 
+            this.chkCH13.AutoSize = true;
+            this.chkCH13.Location = new System.Drawing.Point(102, 42);
+            this.chkCH13.Name = "chkCH13";
+            this.chkCH13.Size = new System.Drawing.Size(65, 17);
+            this.chkCH13.TabIndex = 26;
+            this.chkCH13.Text = "ch5 (13)";
+            this.chkCH13.UseVisualStyleBackColor = true;
+            // 
+            // chkCH12
+            // 
+            this.chkCH12.AutoSize = true;
+            this.chkCH12.Location = new System.Drawing.Point(102, 19);
+            this.chkCH12.Name = "chkCH12";
+            this.chkCH12.Size = new System.Drawing.Size(65, 17);
+            this.chkCH12.TabIndex = 25;
+            this.chkCH12.Text = "ch4 (12)";
+            this.chkCH12.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -212,10 +523,10 @@
             this.groupBox2.Controls.Add(this.cbFrameB);
             this.groupBox2.Controls.Add(this.label38);
             this.groupBox2.Controls.Add(this.chkPPMB);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 135);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(0, 132);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(585, 137);
+            this.groupBox2.Size = new System.Drawing.Size(531, 132);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bank B";
@@ -245,7 +556,7 @@
             this.cbChB16.Location = new System.Drawing.Point(472, 50);
             this.cbChB16.Name = "cbChB16";
             this.cbChB16.Size = new System.Drawing.Size(48, 21);
-            this.cbChB16.TabIndex = 41;
+            this.cbChB16.TabIndex = 37;
             // 
             // label20
             // 
@@ -281,7 +592,7 @@
             this.cbChB13.Location = new System.Drawing.Point(386, 50);
             this.cbChB13.Name = "cbChB13";
             this.cbChB13.Size = new System.Drawing.Size(48, 21);
-            this.cbChB13.TabIndex = 35;
+            this.cbChB13.TabIndex = 31;
             // 
             // label21
             // 
@@ -353,7 +664,7 @@
             this.cbChB15.Location = new System.Drawing.Point(386, 104);
             this.cbChB15.Name = "cbChB15";
             this.cbChB15.Size = new System.Drawing.Size(48, 21);
-            this.cbChB15.TabIndex = 31;
+            this.cbChB15.TabIndex = 35;
             // 
             // label23
             // 
@@ -389,7 +700,7 @@
             this.cbChB10.Location = new System.Drawing.Point(302, 50);
             this.cbChB10.Name = "cbChB10";
             this.cbChB10.Size = new System.Drawing.Size(48, 21);
-            this.cbChB10.TabIndex = 29;
+            this.cbChB10.TabIndex = 25;
             // 
             // label24
             // 
@@ -461,7 +772,7 @@
             this.cbChB12.Location = new System.Drawing.Point(302, 104);
             this.cbChB12.Name = "cbChB12";
             this.cbChB12.Size = new System.Drawing.Size(48, 21);
-            this.cbChB12.TabIndex = 25;
+            this.cbChB12.TabIndex = 29;
             // 
             // label26
             // 
@@ -497,7 +808,7 @@
             this.cbChB7.Location = new System.Drawing.Point(218, 50);
             this.cbChB7.Name = "cbChB7";
             this.cbChB7.Size = new System.Drawing.Size(48, 21);
-            this.cbChB7.TabIndex = 23;
+            this.cbChB7.TabIndex = 19;
             // 
             // label27
             // 
@@ -569,7 +880,7 @@
             this.cbChB9.Location = new System.Drawing.Point(218, 104);
             this.cbChB9.Name = "cbChB9";
             this.cbChB9.Size = new System.Drawing.Size(48, 21);
-            this.cbChB9.TabIndex = 19;
+            this.cbChB9.TabIndex = 23;
             // 
             // label29
             // 
@@ -605,7 +916,7 @@
             this.cbChB4.Location = new System.Drawing.Point(133, 50);
             this.cbChB4.Name = "cbChB4";
             this.cbChB4.Size = new System.Drawing.Size(48, 21);
-            this.cbChB4.TabIndex = 17;
+            this.cbChB4.TabIndex = 13;
             // 
             // label30
             // 
@@ -641,7 +952,7 @@
             this.cbChB6.Location = new System.Drawing.Point(133, 104);
             this.cbChB6.Name = "cbChB6";
             this.cbChB6.Size = new System.Drawing.Size(48, 21);
-            this.cbChB6.TabIndex = 15;
+            this.cbChB6.TabIndex = 17;
             // 
             // label31
             // 
@@ -677,7 +988,7 @@
             this.cbChB5.Location = new System.Drawing.Point(133, 77);
             this.cbChB5.Name = "cbChB5";
             this.cbChB5.Size = new System.Drawing.Size(48, 21);
-            this.cbChB5.TabIndex = 13;
+            this.cbChB5.TabIndex = 15;
             // 
             // label32
             // 
@@ -861,15 +1172,6 @@
             this.chkPPMB.UseVisualStyleBackColor = true;
             this.chkPPMB.CheckedChanged += new System.EventHandler(this.chkPPMB_CheckedChanged);
             // 
-            // splitter1
-            // 
-            this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitter1.Location = new System.Drawing.Point(0, 132);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(585, 3);
-            this.splitter1.TabIndex = 1;
-            this.splitter1.TabStop = false;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.cbChA16);
@@ -913,7 +1215,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(585, 132);
+            this.groupBox1.Size = new System.Drawing.Size(531, 132);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bank A";
@@ -943,7 +1245,7 @@
             this.cbChA16.Location = new System.Drawing.Point(472, 50);
             this.cbChA16.Name = "cbChA16";
             this.cbChA16.Size = new System.Drawing.Size(48, 21);
-            this.cbChA16.TabIndex = 41;
+            this.cbChA16.TabIndex = 37;
             // 
             // label19
             // 
@@ -979,7 +1281,7 @@
             this.cbChA13.Location = new System.Drawing.Point(386, 50);
             this.cbChA13.Name = "cbChA13";
             this.cbChA13.Size = new System.Drawing.Size(48, 21);
-            this.cbChA13.TabIndex = 35;
+            this.cbChA13.TabIndex = 31;
             // 
             // label16
             // 
@@ -1051,7 +1353,7 @@
             this.cbChA15.Location = new System.Drawing.Point(386, 104);
             this.cbChA15.Name = "cbChA15";
             this.cbChA15.Size = new System.Drawing.Size(48, 21);
-            this.cbChA15.TabIndex = 31;
+            this.cbChA15.TabIndex = 35;
             // 
             // label18
             // 
@@ -1087,7 +1389,7 @@
             this.cbChA10.Location = new System.Drawing.Point(302, 50);
             this.cbChA10.Name = "cbChA10";
             this.cbChA10.Size = new System.Drawing.Size(48, 21);
-            this.cbChA10.TabIndex = 29;
+            this.cbChA10.TabIndex = 25;
             // 
             // label13
             // 
@@ -1159,7 +1461,7 @@
             this.cbChA12.Location = new System.Drawing.Point(302, 104);
             this.cbChA12.Name = "cbChA12";
             this.cbChA12.Size = new System.Drawing.Size(48, 21);
-            this.cbChA12.TabIndex = 25;
+            this.cbChA12.TabIndex = 29;
             // 
             // label15
             // 
@@ -1195,7 +1497,7 @@
             this.cbChA7.Location = new System.Drawing.Point(218, 50);
             this.cbChA7.Name = "cbChA7";
             this.cbChA7.Size = new System.Drawing.Size(48, 21);
-            this.cbChA7.TabIndex = 23;
+            this.cbChA7.TabIndex = 19;
             // 
             // label12
             // 
@@ -1267,7 +1569,7 @@
             this.cbChA9.Location = new System.Drawing.Point(218, 104);
             this.cbChA9.Name = "cbChA9";
             this.cbChA9.Size = new System.Drawing.Size(48, 21);
-            this.cbChA9.TabIndex = 19;
+            this.cbChA9.TabIndex = 23;
             // 
             // label10
             // 
@@ -1303,7 +1605,7 @@
             this.cbChA4.Location = new System.Drawing.Point(133, 50);
             this.cbChA4.Name = "cbChA4";
             this.cbChA4.Size = new System.Drawing.Size(48, 21);
-            this.cbChA4.TabIndex = 17;
+            this.cbChA4.TabIndex = 13;
             // 
             // label9
             // 
@@ -1339,7 +1641,7 @@
             this.cbChA6.Location = new System.Drawing.Point(133, 104);
             this.cbChA6.Name = "cbChA6";
             this.cbChA6.Size = new System.Drawing.Size(48, 21);
-            this.cbChA6.TabIndex = 15;
+            this.cbChA6.TabIndex = 17;
             // 
             // label8
             // 
@@ -1375,7 +1677,7 @@
             this.cbChA5.Location = new System.Drawing.Point(133, 77);
             this.cbChA5.Name = "cbChA5";
             this.cbChA5.Size = new System.Drawing.Size(48, 21);
-            this.cbChA5.TabIndex = 13;
+            this.cbChA5.TabIndex = 15;
             // 
             // label7
             // 
@@ -1563,14 +1865,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 272);
+            this.ClientSize = new System.Drawing.Size(677, 402);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "frmMain";
-            this.Text = "s.BUS Decoder Configurator";
+            this.Text = "s.BUS Decoder Configurator Switched";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -1587,7 +1897,6 @@
         private System.Windows.Forms.Button btnWrite;
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cbChA16;
         private System.Windows.Forms.Label label19;
@@ -1666,6 +1975,31 @@
         private System.Windows.Forms.ComboBox cbFrameB;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.CheckBox chkPPMB;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox chkCH16;
+        private System.Windows.Forms.CheckBox chkCH15;
+        private System.Windows.Forms.CheckBox chkCH14;
+        private System.Windows.Forms.CheckBox chkCH13;
+        private System.Windows.Forms.CheckBox chkCH12;
+        private System.Windows.Forms.CheckBox chkCH11;
+        private System.Windows.Forms.CheckBox chkCH10;
+        private System.Windows.Forms.CheckBox chkCH9;
+        private System.Windows.Forms.CheckBox chkCH8;
+        private System.Windows.Forms.CheckBox chkCH7;
+        private System.Windows.Forms.CheckBox chkCH6;
+        private System.Windows.Forms.CheckBox chkCH5;
+        private System.Windows.Forms.CheckBox chkCH4;
+        private System.Windows.Forms.CheckBox chkCH3;
+        private System.Windows.Forms.CheckBox chkCH2;
+        private System.Windows.Forms.CheckBox chkCH1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox chkSW;
+        private System.Windows.Forms.Button BtnDefault;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }
 

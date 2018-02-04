@@ -5,6 +5,9 @@
 #define CHANNELS_COUNT 16
 volatile uint8_t ChannelsMapA[CHANNELS_COUNT] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 volatile uint8_t ChannelsMapB[CHANNELS_COUNT] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+volatile boolean ChannelsMapSwitchA[8] = {0,0,0,0,0,0,0,0};  // Set which servo to act as a switch
+volatile boolean ChannelsMapSwitchB[8] = {0,0,0,0,0,0,0,0};  // Set which servo to act as a switch
+volatile uint8_t SW_AB = 0;
 volatile uint8_t PPM_A = 0;
 volatile uint8_t PPM_B = 0;
 volatile uint8_t ChannelsBankA = 0;
@@ -60,13 +63,6 @@ volatile uint8_t OCR_BANK_B = 0;
 #define  CH15_on PORTC |= (1<<3) //A3
 #define  CH15_off PORTC &= 0xF7 //A3
 
-
-//#define SET_TIME_A(x) Set_TimeA( x )
-//#define SET_TIME_B(x) Set_TimeB( x )
-#define SET_TIME_PPM_A(x) Set_Time_PPMA( x )
-#define SET_TIME_PPM_B(x) Set_Time_PPMB( x )
-
-
 // EEPROM Addr
 // Bank A
 #define ADDR_PPM_BANK_A 0
@@ -78,5 +74,8 @@ volatile uint8_t OCR_BANK_B = 0;
 #define ADDR_TIMER_LOOPS_B 20
 #define ADDR_CHANNELS_B 21
 #define ADDR_CHANNEL_MAP_B 22
-
+// Switches
+#define ADDR_SWITCHES 40
+#define ADDR_SWITCHES_A 41
+#define ADDR_SWITCHES_B 42
 #endif

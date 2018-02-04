@@ -7,21 +7,22 @@ volatile uint8_t State_chB=0;
 
 void Timer1_init()
 {
-  TCCR1B   =   0;   //stop timer
+  // 16bit
+  TCCR1B   =   0;   //stop timer - Timer/Counter Control Register. The pre-scaler can be configured here.
   TCCR1A   =   0;
-  TCNT1   =    0;   //setup
+  TCNT1   =    0;   //setup - Timer/Counter Register. The actual timer value is stored here.
   TCCR1A   =   0;
   TCCR1B = 0<<CS12 | 1<<CS11 | 0<<CS10;
-  TIMSK1 = (1<<OCIE1A) | (1<<OCIE1B);   // Разрешить прерывание по совпадению
-  OCR1A = 0;
+  TIMSK1 = (1<<OCIE1A) | (1<<OCIE1B);   // allow interrupt by ?coincidence?
+  OCR1A = 0;        // Output Compare Register
   OCR1B = 0;
-
+  // 8bit
   TCCR2B   =   0;   //stop timer
   TCCR2A   =   0;
   TCNT2   =    0;   //setup
   TCCR2A   =   0;
   TCCR2A = 1<<WGM21;
-  TCCR2B = (1<<CS21)|(1<<CS22);                   // CLK/256 
+  TCCR2B = (1<<CS21)|(1<<CS22);        // CLK/256 
   TIMSK2 = 1<<OCIE2A;
   OCR2A = 249;
 
@@ -30,7 +31,8 @@ void Timer1_init()
   UpdateBankB();
 }
 
-ISR(TIMER2_COMPA_vect) {
+ISR(TIMER2_COMPA_vect)
+{
   cntA++;
   if (cntA>OCR_BANK_A){
     // end of frame to bank A
@@ -44,10 +46,9 @@ ISR(TIMER2_COMPA_vect) {
     }
     else
     {
-      // Servo
-      if (ChannelsMapA[curr_chA] < 16) OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000);
+      if (ChannelsMapA[curr_chA] < 16)
+        OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000);
       else OCR1A = TCNT1 + sBus.Failsafe() * 2000 + 2000;
-      //OCR1A = TCNT1 + Set_TimeA(curr_chA);
       ServoOn(curr_chA);
     }
     cntA = 0;
@@ -64,49 +65,61 @@ ISR(TIMER2_COMPA_vect) {
     }
     else
     {
-      if (ChannelsMapB[curr_chB] < 16) OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000);
+      if (ChannelsMapB[curr_chB] < 16)
+        OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000);
       else OCR1B = TCNT1 + sBus.Failsafe() * 2000 + 2000;
-      //OCR1B = TCNT1 + Set_TimeB(curr_chB);
       ServoOn(curr_chB+8);
     }
-    cntB=0;
+    cntB = 0;
   }
 }
 
 ISR (TIMER1_COMPA_vect)
 {
-  if (PPM_A == 1) UpdatePPMA();
+  if (PPM_A == 1)
+    UpdatePPMA();
   else 
-  UpdateBankA();
+    UpdateBankA();
 }
 
 ISR (TIMER1_COMPB_vect)
 {
-  if (PPM_B == 1) UpdatePPMB();
+  if (PPM_B == 1)
+    UpdatePPMB();
   else 
-  UpdateBankB();
+    UpdateBankB();
 }
 
 void UpdateBankA()
-{
-  ServoOff(curr_chA);
+{  // Addition for switching
+  if (SW_AB == true && ChannelsMapSwitchA[curr_chA] == true && sBus.channels[ChannelsMapA[curr_chA]] < 1023)
+    ServoOn(curr_chA);
+  else
+    ServoOff(curr_chA);
+
   curr_chA++;
   if (curr_chA<ChannelsBankA) {
-    if (ChannelsMapA[curr_chA] < 16) OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000);
-      else OCR1A = TCNT1 + sBus.Failsafe() * 2000 + 2000;
-    //OCR1A = TCNT1 + Set_TimeA(curr_chA);
+    if (ChannelsMapA[curr_chA] < 16)
+      OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000);
+    else
+      OCR1A = TCNT1 + sBus.Failsafe() * 2000 + 2000;
     ServoOn(curr_chA);
   }
 }
 
 void UpdateBankB()
-{
-  ServoOff(curr_chB+8);
+{  // Addition for switching
+  if (SW_AB == true && ChannelsMapSwitchB[curr_chB] == true && sBus.channels[ChannelsMapB[curr_chB+8]] < 1023)
+    ServoOn(curr_chB+8);
+  else
+    ServoOff(curr_chB+8);
+
   curr_chB++;
   if (curr_chB<ChannelsBankB) {
-    if (ChannelsMapB[curr_chB] < 16) OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000);
-      else OCR1B = TCNT1 + sBus.Failsafe() * 2000 + 2000;
-    //OCR1B = TCNT1 + Set_TimeB(curr_chB);
+    if (ChannelsMapB[curr_chB] < 16) 
+      OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000);
+    else 
+      OCR1B = TCNT1 + sBus.Failsafe() * 2000 + 2000;
     ServoOn(curr_chB+8);
   }
 }
@@ -164,10 +177,11 @@ void UpdatePPMA()
     CH1_on;
     State_chA=1;
     if (curr_chA<ChannelsBankA){
-      if (ChannelsMapA[curr_chA] < 16) OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000-400);
-      else OCR1A = TCNT1 + sBus.Failsafe() * 2000 + 2000-400;
+      if (ChannelsMapA[curr_chA] < 16)
+        OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000-400);
+      else
+        OCR1A = TCNT1 + sBus.Failsafe() * 2000 + 2000-400;
     }
-      //OCR1A = TCNT1 + SET_TIME_PPM_A(curr_chA);
   }
   else
   {
@@ -185,10 +199,11 @@ void UpdatePPMB()
     CH9_on;
     State_chB=1;
     if (curr_chB<ChannelsBankB){
-      if (ChannelsMapB[curr_chB] < 16) OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000-400);
-      else OCR1B = TCNT1 + sBus.Failsafe() * 2000 + 2000-400;
+      if (ChannelsMapB[curr_chB] < 16)
+        OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000-400);
+      else
+        OCR1B = TCNT1 + sBus.Failsafe() * 2000 + 2000-400;
     }
-      //OCR1B = TCNT1 + SET_TIME_PPM_B(curr_chB);
   }
   else
   {
@@ -198,29 +213,4 @@ void UpdatePPMB()
     curr_chB++;
   }
 }
-/*
-byte Set_TimeA(byte pos)
-{
-  if (ChannelsMapA[pos] < 16) return (sBus.channels[ChannelsMapA[pos]]+2000);
-  else return sBus.Failsafe() * 2000 + 2000;
-}
-
-byte Set_TimeB(byte pos)
-{
-  if (ChannelsMapB[pos] < 16) return (sBus.channels[ChannelsMapB[pos]]+2000);
-  else return sBus.Failsafe() * 2000 + 2000;
-}
-*/
-/*
-byte Set_Time_PPMA(byte pos)
-{
-  if (pos < 16) return (sBus.channels[ChannelsMapA[pos]]+2000-400);
-  else return sBus.Failsafe() * 2000 + 2000-400;
-}
-
-byte Set_Time_PPMB(byte pos)
-{
-  if (pos < 16) return (sBus.channels[ChannelsMapB[pos]]+2000-400);
-  else return sBus.Failsafe() * 2000 + 2000-400;
-}*/
 

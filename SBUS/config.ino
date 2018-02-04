@@ -5,28 +5,28 @@ byte GetConfigState()
   return digitalRead(A4);
 }
 
-byte buf[41];
+byte buf[44];
 byte buf_ptr = 0;
 
 bool bufValid()
 {
-  return (buf[0]==0xaa) && (buf[40]==0x5d);
+  return (buf[0]==0xaa) && (buf[43]==0x5d);
 }
 
 void CallConfig()
 {
   byte b = Serial.read();
-  if (b == 0xaa)
+  if (b == 0xaa && !(buf_ptr == 41 || buf_ptr == 42)) // addition to avoid conflict with switches buf
   {
     buf_ptr = 0;
   }
-  if (buf_ptr < 41)
+  if (buf_ptr < 44)
   {
     buf[buf_ptr] = b;
     buf_ptr++;
   }
   
-  if (buf_ptr > 40 && bufValid())
+  if (buf_ptr > 43 && bufValid())
     CallCommand();
 }
 
@@ -42,7 +42,10 @@ Packet:
 22 - Timer2 loops to Bank B
 23 - Channels bank B
 24:39 - channel map bank B
-40 - check byte 0x5d
+40 - Switches enabled - new V3
+41 - Bank A switches - new V3
+42 - Bank B switches - new V3
+43 - check byte 0x5d
 */
 
 void CallCommand()
@@ -65,9 +68,13 @@ void CallReadCFG()
   buf[23] = EEPROM.read(ADDR_CHANNELS_B);
   for(int i=0;i<16;i++)
     buf[i+24] = EEPROM.read(ADDR_CHANNEL_MAP_B + i);
+  buf[40] = EEPROM.read(ADDR_SWITCHES);
+  buf[41] = EEPROM.read(ADDR_SWITCHES_A);
+  buf[42] = EEPROM.read(ADDR_SWITCHES_B);  
     
-  for (int i=0;i<41;i++)
+  for (int i=0;i<44;i++)
     Serial.write(buf[i]);
+  
 }
 
 void CallWriteCFG()
@@ -84,6 +91,9 @@ void CallWriteCFG()
   EEPROM.write(ADDR_CHANNELS_B, buf[23]);
   for(int i=0;i<16;i++)
     EEPROM.write(ADDR_CHANNEL_MAP_B + i, buf[i+24]);
+  EEPROM.write(ADDR_SWITCHES, buf[40]);
+  EEPROM.write(ADDR_SWITCHES_A, buf[41]);  
+  EEPROM.write(ADDR_SWITCHES_B, buf[42]);  
 }
 
 void PrepareCFG()
@@ -115,5 +125,12 @@ void PrepareCFG()
       if (i<8) ChannelsMapB[i] = i+8;
       else ChannelsMapB[i] = i;
     }
+  }
+  
+  SW_AB = EEPROM.read(ADDR_SWITCHES);
+  for(int i=0;i<8;i++)
+  {
+    ChannelsMapSwitchA[i] = (EEPROM.read(ADDR_SWITCHES_A) & 1 << i) >> i;
+    ChannelsMapSwitchB[i] = (EEPROM.read(ADDR_SWITCHES_B) & 1 << i) >> i;
   }
 }

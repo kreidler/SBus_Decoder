@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Timers;
 
 namespace SBUSDecoderCFG
 {
@@ -14,6 +15,9 @@ namespace SBUSDecoderCFG
     {
         Dictionary<int, ComboBox> cbBankA = new Dictionary<int,ComboBox>();
         Dictionary<int, ComboBox> cbBankB = new Dictionary<int, ComboBox>();
+
+        public int version;
+        public static System.Timers.Timer aTimer;
 
         private void cbBanksInit()
         {
@@ -68,6 +72,12 @@ namespace SBUSDecoderCFG
             cbPorts.Items.Clear();
             cbPorts.Items.AddRange(SerialPort.GetPortNames());
             if (cbPorts.Items.Count > 0) cbPorts.SelectedIndex = 0;
+
+            if (!chkSW.Checked) ChkSwitches_Set();
+
+            chkSW.Enabled = false;
+            radioButton1.Checked = true;
+            version = 2;
         }
 
         private int GetChannelsCount(int FrameIndex)
@@ -123,6 +133,11 @@ namespace SBUSDecoderCFG
                 cbFrameB.SelectedIndex = 1;
                 // Channels <8
                 update_cbChannelsPWM(cbChannelsB, cbFrameB.SelectedIndex, 8);
+
+                if (radioButton2.Checked)
+                    chkSW.Enabled = true;
+                if (chkSW.Checked && !radioButton1.Checked)
+                    groupBox4.Enabled = true;
             }
             else
             {
@@ -130,6 +145,10 @@ namespace SBUSDecoderCFG
                 cbFrameB.SelectedIndex = 2;
                 // Channels up to 16
                 update_cbChannelsPPM(cbChannelsB, cbFrameB.SelectedIndex, 16);
+
+                if (chkPPMA.Checked && radioButton2.Checked)
+                    chkSW.Enabled = false;
+                groupBox4.Enabled = false;
             }
             UpdateBankEnabled(cbBankB, cbChannelsB.Items.Count);
         }
@@ -142,6 +161,11 @@ namespace SBUSDecoderCFG
                 cbFrameA.SelectedIndex = 1;
                 // Channels <8
                 update_cbChannelsPWM(cbChannelsA, cbFrameA.SelectedIndex, 8);
+
+                if (radioButton2.Checked)
+                    chkSW.Enabled = true;
+                if (chkSW.Checked && !radioButton1.Checked)
+                    groupBox3.Enabled = true;
             }
             else
             {
@@ -149,29 +173,66 @@ namespace SBUSDecoderCFG
                 cbFrameA.SelectedIndex = 2;
                 // Channels up to 16
                 update_cbChannelsPPM(cbChannelsA, cbFrameA.SelectedIndex, 16);
+
+                if (chkPPMB.Checked && radioButton2.Checked)
+                    chkSW.Enabled = false;
+                groupBox3.Enabled = false;
             }
             UpdateBankEnabled(cbBankA, cbChannelsA.Items.Count);
         }
 
         private void btnRead_Click(object sender, EventArgs e)
         {
-            byte[] buff = new byte[41];
+            /* Taken from Arduino file
+                Packet:
+                0 - start byte 0xaa
+                1 - command (R - read / W - write)
+                2 - PPM Bank A
+                3 - Timer2 loops to Bank A
+                4 - Channels bank A
+                5:20 - channel map bank A
+                21 - ppm bank B
+                22 - Timer2 loops to Bank B
+                23 - Channels bank B
+                24:39 - channel map bank B
+                40 - Switches enabled - new V3
+                41 - Bank A switches - new V3
+                42 - Bank B switches - new V3
+                43 - check byte 0x5d
+                */
+            int buffsize;
+            if (version == 2)
+                buffsize = 41;
+            else
+                buffsize = 44;
+
+            byte[] buff = new byte[buffsize];
             buff[0] = 0xaa;
             buff[1] = 0x52; // R
 
-            for (int i = 2; i < 40; i++)
+            for (int i = 2; i < buffsize-1; i++)
                 buff[i] = 0;
 
-            buff[40] = 0x5d;
+            buff[buffsize-1] = 0x5d; // Check byte
 
             COMPort.Open();
-            COMPort.Write(buff, 0, 41);
+            COMPort.Write(buff, 0, buffsize);
 
+            // Tried to catch up the endless loops
+            // Seems to be necessary due to slow COM
+            MessageBox.Show("Start to read data", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
             int cnt = 0;
-            while (cnt < 40)
+            while (cnt < buffsize-1)
             {
-                if (COMPort.BytesToRead > 40) 
-                    cnt = COMPort.Read(buff, 0, 41);
+                if (COMPort.BytesToRead > buffsize - 1)
+                    cnt = COMPort.Read(buff, 0, buffsize);
+                if (cnt == 0)
+                {
+                    MessageBox.Show("Read Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    COMPort.Close();
+                    return;
+                }
             }
             COMPort.Close();
 
@@ -216,11 +277,39 @@ namespace SBUSDecoderCFG
             if (buff[37] < 17) cbChB14.SelectedIndex = buff[37];
             if (buff[38] < 17) cbChB15.SelectedIndex = buff[38];
             if (buff[39] < 17) cbChB16.SelectedIndex = buff[39];
+
+            if (version == 3)
+            {
+                chkSW.Checked = (buff[40] == 1);
+                chkCH8.Checked = Convert.ToBoolean((buff[41] & 1 << 7) >> 7);
+                chkCH7.Checked = Convert.ToBoolean((buff[41] & 1 << 6) >> 6);
+                chkCH6.Checked = Convert.ToBoolean((buff[41] & 1 << 5) >> 5);
+                chkCH5.Checked = Convert.ToBoolean((buff[41] & 1 << 4) >> 4);
+                chkCH4.Checked = Convert.ToBoolean((buff[41] & 1 << 3) >> 3);
+                chkCH3.Checked = Convert.ToBoolean((buff[41] & 1 << 2) >> 2);
+                chkCH2.Checked = Convert.ToBoolean((buff[41] & 1 << 1) >> 1);
+                chkCH1.Checked = Convert.ToBoolean((buff[41] & 1 << 0) >> 0);
+
+                chkCH16.Checked = Convert.ToBoolean((buff[42] & 1 << 7) >> 7);
+                chkCH15.Checked = Convert.ToBoolean((buff[42] & 1 << 6) >> 6);
+                chkCH14.Checked = Convert.ToBoolean((buff[42] & 1 << 5) >> 5);
+                chkCH13.Checked = Convert.ToBoolean((buff[42] & 1 << 4) >> 4);
+                chkCH12.Checked = Convert.ToBoolean((buff[42] & 1 << 3) >> 3);
+                chkCH11.Checked = Convert.ToBoolean((buff[42] & 1 << 2) >> 2);
+                chkCH10.Checked = Convert.ToBoolean((buff[42] & 1 << 1) >> 1);
+                chkCH9.Checked = Convert.ToBoolean((buff[42] & 1 << 0) >> 0);
+            }
         }
 
         private void btnWrite_Click(object sender, EventArgs e)
         {
-            byte[] buff = new byte[41];
+            int buffsize;
+            if (version == 2)
+                buffsize = 41;
+            else
+                buffsize = 44;
+
+            byte[] buff = new byte[buffsize];
             buff[0] = 0xaa;
             buff[1] = 0x57; // W
             buff[2] = Convert.ToByte(chkPPMA.Checked);
@@ -265,11 +354,38 @@ namespace SBUSDecoderCFG
             buff[38] = (byte)(cbChB15.SelectedIndex);
             buff[39] = (byte)(cbChB16.SelectedIndex);
 
-            buff[40] = 0x5d;
+            if (version == 3)
+            {
+                buff[40] = Convert.ToByte(chkSW.Checked);
+                int conversion = 0;
+                conversion = Convert.ToInt16(chkCH1.Checked) << 0;
+                conversion |= Convert.ToInt16(chkCH2.Checked) << 1;
+                conversion |= Convert.ToInt16(chkCH3.Checked) << 2;
+                conversion |= Convert.ToInt16(chkCH4.Checked) << 3;
+                conversion |= Convert.ToInt16(chkCH5.Checked) << 4;
+                conversion |= Convert.ToInt16(chkCH6.Checked) << 5;
+                conversion |= Convert.ToInt16(chkCH7.Checked) << 6;
+                conversion |= Convert.ToInt16(chkCH8.Checked = false) << 7; // On pin D9 seems to be OCR1A
+                buff[41] = Convert.ToByte(conversion);                      // servo operation is ok
+                conversion = 0;                                             // but no switching possible
+                conversion |= Convert.ToInt16(chkCH9.Checked) << 0;         // CH9 (D10) with OCR1B seems be to ok?!
+                conversion |= Convert.ToInt16(chkCH10.Checked) << 1;
+                conversion |= Convert.ToInt16(chkCH11.Checked) << 2;
+                conversion |= Convert.ToInt16(chkCH12.Checked) << 3;
+                conversion |= Convert.ToInt16(chkCH13.Checked) << 4;
+                conversion |= Convert.ToInt16(chkCH14.Checked) << 5;
+                conversion |= Convert.ToInt16(chkCH15.Checked) << 6;
+                conversion |= Convert.ToInt16(chkCH16.Checked) << 7;
+                buff[42] = Convert.ToByte(conversion);
+            }
+
+            buff[buffsize-1] = 0x5d;
 
             COMPort.Open();
-            COMPort.Write(buff, 0, 41);
+            COMPort.Write(buff, 0, buffsize);
             COMPort.Close();
+
+//            MessageBox.Show("Data written", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cbFrameA_SelectedIndexChanged(object sender, EventArgs e)
@@ -307,5 +423,74 @@ namespace SBUSDecoderCFG
             COMPort.PortName = cbPorts.SelectedItem.ToString();
         }
 
+        private void chkSW_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!chkPPMA.Checked || !chkPPMB.Checked)
+                ChkSwitches_Set();
+        }
+
+        private void ChkSwitches_Set()
+        {
+            if (!chkSW.Checked)
+            {
+                groupBox3.Enabled = false;
+                groupBox4.Enabled = false;
+            }
+            else
+            {
+                if (!chkPPMA.Checked)
+                    groupBox3.Enabled = true;
+                if (!chkPPMB.Checked)
+                    groupBox4.Enabled = true;
+            }
+        }
+
+        private void BtnDefault_Click(object sender, EventArgs e)
+        {
+            radioButton1.Checked = true;
+            chkPPMA.Checked = true;
+            chkPPMB.Checked = true;
+            chkPPMA.Checked = false;
+            chkPPMB.Checked = false;
+            cbChA1.SelectedIndex = 0;
+            cbChA2.SelectedIndex = 1;
+            cbChA3.SelectedIndex = 2;
+            cbChA4.SelectedIndex = 3;
+            cbChA5.SelectedIndex = 4;
+            cbChA6.SelectedIndex = 5;
+            cbChA7.SelectedIndex = 6;
+            cbChA8.SelectedIndex = 7;
+            cbChB1.SelectedIndex = 8;
+            cbChB2.SelectedIndex = 9;
+            cbChB3.SelectedIndex = 10;
+            cbChB4.SelectedIndex = 11;
+            cbChB5.SelectedIndex = 12;
+            cbChB6.SelectedIndex = 13;
+            cbChB7.SelectedIndex = 14;
+            cbChB8.SelectedIndex = 15;
+            chkSW.Enabled = false;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            version = 2;
+            chkSW.Enabled = false;
+            groupBox3.Enabled = false;
+            groupBox4.Enabled = false;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            version = 3;
+            if ((chkPPMA.Checked ^ chkPPMB.Checked) || (!chkPPMA.Checked && !chkPPMB.Checked))
+                chkSW.Enabled = true;
+            if (chkSW.Checked)
+            {
+                if (!chkPPMA.Checked)
+                    groupBox3.Enabled = true;
+                if (!chkPPMB.Checked)
+                    groupBox4.Enabled = true;
+            }
+        }
     }
 }
