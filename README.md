@@ -65,7 +65,7 @@ Top view
 Please compare with the pictures above.
 
 ## Firmware
-As usual the code can be flashed using the Arduino IDE. The code was testes with 1.0.6 and has not been run on the newer versions. After flashing the Decoder must be initialized:
+As usual the code can be flashed using the Arduino IDE. Of course, the folder FUTABA_SBUS has to be added as library via Sketch -> Include library -> Add .ZIP library. After flashing the Decoder must be initialized:
 
   * Set JP "Config Mode"
   * Run the SBUS Decoder Configurator

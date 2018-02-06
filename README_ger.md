@@ -63,7 +63,7 @@ Draufsicht
 Bitte mit den obigen Bildern vergleichen.
 
 ## Firmware
-Wie üblich kann das Programm mit der Arduino IDE geflasht werden. Der Code wurde mit 1.0.6 getestet und wurde in den neueren Versionen nicht ausgeführt. Nach dem Blinken muss der Decoder initialisiert werden:
+Wie üblich kann das Programm mit der Arduino IDE geflasht werden. Selbstverständlich muss der Ordner FUTABA_SBUS als Bibliothek eingebunden werden über Sketch -> Bibliothek einbinden -> .ZIP Bibliothek hinzufügen. Nach dem Übertragen der Firmware muss der Decoder initialisiert werden:
 
   * Setzen von JP "Config Mode"
   * Starten von SBUS Decoder Konfigurator
