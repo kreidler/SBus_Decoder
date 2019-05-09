@@ -103,13 +103,16 @@ void UpdateBankA()
       OCR1A = TCNT1 + (sBus.channels[ChannelsMapA[curr_chA]]+2000);
     else
       OCR1A = TCNT1 + sBus.Failsafe() * 2000 + 2000;
-    ServoOn(curr_chA);
+    if (SW_AB == true && ChannelsMapSwitchA[curr_chA] == true && sBus.channels[ChannelsMapA[curr_chA]] >= 1023) //addition to avoid 0.4V on the pin
+      ServoOff(curr_chA);
+    else
+      ServoOn(curr_chA);
   }
 }
 
 void UpdateBankB()
 {  // Addition for switching
-  if (SW_AB == true && ChannelsMapSwitchB[curr_chB] == true && sBus.channels[ChannelsMapB[curr_chB+8]] < 1023)
+  if (SW_AB == true && ChannelsMapSwitchB[curr_chB] == true && sBus.channels[ChannelsMapB[curr_chB]] < 1023)
     ServoOn(curr_chB+8);
   else
     ServoOff(curr_chB+8);
@@ -120,7 +123,10 @@ void UpdateBankB()
       OCR1B = TCNT1 + (sBus.channels[ChannelsMapB[curr_chB]]+2000);
     else 
       OCR1B = TCNT1 + sBus.Failsafe() * 2000 + 2000;
-    ServoOn(curr_chB+8);
+    if (SW_AB == true && ChannelsMapSwitchB[curr_chB] == true && sBus.channels[ChannelsMapB[curr_chB]] >= 1023) //addition to avoid 0.4V on the pin
+      ServoOff(curr_chB+8);
+    else
+      ServoOn(curr_chB+8);
   }
 }
 

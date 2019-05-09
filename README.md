@@ -1,12 +1,12 @@
-# SBus_Decoder V3.0
+# SBus_Decoder V3.1
 
 ## Introduction
 This project enables an Arduino to receive up to 16 channels send from any S.Bus receiver, decode them and forward the signals as 16 PWM signals (for connecting servos or ESC) and / or up to two independent PPM channels.
 The way of handling the output can be configured via a Windows application.
 
-V3.0 enhances the capabilites with an option for RC functional modelling to confiure the channels as "Switches" to drive up to 15 standard relay modules (or DC SSR also).
+V3 enhances the capabilites with an option for RC functional modelling to confiure the channels as "Switches" to drive up to 13 standard relay modules (or DC SSR / Darlington array also).
 
-* Connection of up to 16 servos or 15 relay modules in mixed manner
+* Connection of up to 16 servos or 13 relay modules in mixed manner
 * Generation of up to 2 independent PPM signals
 * Encoding up to 16 channels in each PPM
 * Reassign s.Bus channels to any outputs of the decoder and / or to any location of the PPM signal
@@ -32,11 +32,11 @@ Later on you can arrange like shown here:
 
 Or even right out of the box with the help of our Chinese friends (purple lead is a jumper PC_EN -- GND):
 ![Chinese one](docs/SBus_China.jpg "no comment")
-Yes, they made a commercial product with an ATMega168PA of this idea using even the same configurator program. Available at least on [Banggood](https://www.banggood.com/DIY-SBUS-To-PWMPPM-Decoder-16CH-For-Futaba-Orange-Frsky-p-987248.html) for about $15. But it still needs USB2SERIAL for configuration. The onboard voltage regulator might be able to accept input voltage up to 6.5V (datasheet VR), This would be ok for most of the actual servos (not for all;) but be careful if using relay modules which normally accept 5V only. Unfortunately I still have not had the time to get the V3.0 firmware working on this product. But you are still free to use the SBUS Decoder Configurator with V2 enabled.
+Yes, they made a commercial product with an ATMega168PA of this idea using even the same configurator program. Available at least on [Banggood](https://www.banggood.com/DIY-SBUS-To-PWMPPM-Decoder-16CH-For-Futaba-Orange-Frsky-p-987248.html) for about $15. But it still needs USB2SERIAL for configuration. The onboard voltage regulator might be able to accept input voltage up to 6.5V (datasheet VR), This would be ok for most of the actual servos (not for all;) but be careful if using relay modules which normally accept 5V only. **Unfortunately I still have not had the time to get the V3 firmware working on this product. But you are still free to use the SBUS Decoder Configurator with V2 enabled.**
 
 ## Inverter
 A short explanation of the Sbus protocol can be found here: https://github.com/bolderflight/SBUS/blob/master/README.md
-The protocol uses inverted serial logic and therefore requires an inverter (again) to enable the Arduino working with the data.
+The protocol uses inverted serial logic and therefore requires an inverter (again) to enable the Arduino working with the data. For most FrSky receivers (e.g.) you can find information / pictures on the Internet providing the position of the uninverted Sbus signal. In this case the inverter needs not be used.
 
 ### Hardware inverter
 Many guys do this job with a transistor and some resistors like shown here (taken from RCG):
@@ -75,7 +75,7 @@ As usual the code can be flashed using the Arduino IDE. Of course, the folder FU
   * Click the Write button
 
 ## SBUS Decoder Configurator
-The "Switched" V3.0 version includes the swtich functionality as well as a short instruction (from my Chinese friends program) for connecting the Decoder to a USB2SERIAL. Additionally a button "Load Defaults" and a Version button has been added. The program was written with Microsoft Visual C#. Bank A and B work absolutely independently of each other and there is no mutual influence of any settings between them.
+The "Switched" V3 version includes the swtich functionality as well as a short instruction (from my Chinese friends program) for connecting the Decoder to a USB2SERIAL. Additionally a button "Load Defaults" and a Version button has been added. The program was written with Microsoft Visual C#. Bank A and B work absolutely independently of each other and there is no mutual influence of any settings between them.
 
 For accessing the S.Bus Decoder connect the USB2SERIAL interface as you upload firmware. Set the JP "Config Mode" (Pin A4 to ground (GND)) and reset / reboot the Arduino.
 
@@ -105,8 +105,16 @@ When in Config Mode the internal LED (Pin D13) should not blink.
 
 * Ch1 - Ch16: The Ch number indicates the position of the signal in the bank. The drop-down list allows to select the channel number from the S.Bus. You can switch any channel transmitted from the console to any of the decoder's outputs. In the drop-down list of each output, you can select the value "FS". Selecting this value means that the failsafe is set for output. The signal will be output as a PWM with a pulse length of 1000 μs or 2000 μs.
 
-* Checkbox Switches: If unchecked, the decoder will work described above. If checked, the Channels of Bank A and B can be assigned as low / high output without any PWM signal on the line. This output can be used to control the common Arduino relay modules. It does not matter if "Switches" is active (checked) as long as the channels will be left blank. Ch8 is blocked and can be used for PWM (Servo) operation only.
+* Checkbox Switches: If unchecked, the decoder will work described above. If checked, the Channels of Bank A and B can be assigned as low / high output without any PWM signal on the line. This output can be used to control the common Arduino relay modules. It does not matter if "Switches" is active (checked) as long as the channels will be left blank. Ch 8, 9 and 10 are blocked and can be used for PWM (Servo) operation only.
 
 Attention: Not all receivers will send a communication loss signal to the S.Bus. Check that the output signals for your receiver are correct.
 
 If getting the sync error (stk500_getsync()) while uploading firmware disconnect the S.Bus line through removing JP "Inverter" between Arduino and inverter or select the correct board;).
+
+## Revision History
+* V1 Published on http://rc-master.ucoz.ru/publ/19-1-0-87
+* V2 Published on https://github.com/mactep8/SBus_Decoder
+* V3 Initial version with switches
+* V3.1 Corrections:
+  * Ch9 and 10 blocked for use as a switch
+  * Switching pins do have 0 volts now 

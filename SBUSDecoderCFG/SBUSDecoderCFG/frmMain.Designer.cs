@@ -200,7 +200,7 @@
             // BtnDefault
             // 
             this.BtnDefault.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BtnDefault.Location = new System.Drawing.Point(12, 266);
+            this.BtnDefault.Location = new System.Drawing.Point(12, 277);
             this.BtnDefault.Name = "BtnDefault";
             this.BtnDefault.Size = new System.Drawing.Size(121, 23);
             this.BtnDefault.TabIndex = 4;
@@ -218,7 +218,7 @@
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.Size = new System.Drawing.Size(128, 153);
+            this.richTextBox1.Size = new System.Drawing.Size(128, 172);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "Enable PC setting mode：\nPC_EN (A4)<-->GND\n\nFlashing mode：\nremove S.Bus signal\n\nFT" +
     "DI Connection:\n TX<-->RX\n RX<-->TX\n VCC<-->VCC(5V/3.3V)\n GND<-->GND";
@@ -406,6 +406,7 @@
             // chkCH9
             // 
             this.chkCH9.AutoSize = true;
+            this.chkCH9.Enabled = false;
             this.chkCH9.Location = new System.Drawing.Point(18, 19);
             this.chkCH9.Name = "chkCH9";
             this.chkCH9.Size = new System.Drawing.Size(59, 17);
@@ -436,6 +437,7 @@
             // chkCH10
             // 
             this.chkCH10.AutoSize = true;
+            this.chkCH10.Enabled = false;
             this.chkCH10.Location = new System.Drawing.Point(18, 42);
             this.chkCH10.Name = "chkCH10";
             this.chkCH10.Size = new System.Drawing.Size(65, 17);
@@ -1869,7 +1871,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "frmMain";
-            this.Text = "s.BUS Decoder Configurator Switched";
+            this.Text = "s.BUS Decoder Configurator Switched V3.1";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);

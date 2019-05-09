@@ -1,12 +1,12 @@
-# SBus_Decoder V3.0
+# SBus_Decoder V3.1
 
 ## Einführung
 Dieses Projekt ermöglicht es einem Arduino, bis zu 16 Kanäle von jedem S.Bus-Empfänger zu empfangen, zu dekodieren und die Signale als 16 PWM-Signale (zum Anschluss von Servos oder Fahrtenreglern) und / oder bis zu zwei unabhängige PPM-Kanäle weiterzuleiten.
 Die Art der Ausgabe kann über eine Windows-Programm konfiguriert werden.
 
-V3.0 erweitert die Möglichkeiten mit einer Option für die RC-Funktionsmodellbau, um die Kanäle als "Schalter" für den Betrieb von bis zu 15 Standard-Relaismodulen (oder auch DC SSR) zu konfigurieren.
+V3 erweitert die Möglichkeiten mit einer Option für die RC-Funktionsmodellbau, um die Kanäle als "Schalter" für den Betrieb von bis zu 13 Standard-Relaismodulen (oder auch DC SSR / Darlington-Treiber) zu konfigurieren.
 
-* Anschluss von bis zu 16 Servos oder 15 Relaismodulen in freier Folge
+* Anschluss von bis zu 16 Servos oder 13 Relaismodulen in freier Folge
 * Generierung von bis zu 2 unabhängigen PPM-Signalen
 * Kodierung von bis zu 16 Kanälen in jedem PPM
 * Neuzuweisung von S.Bus-Kanälen an alle Ausgänge des Decoders und / oder an jede Stelle des PPM-Signals
@@ -31,11 +31,11 @@ Später kann man es wie hier gezeigt aufbauen:
 
 Oder sogar direkt aus der Kiste mit Hilfe unserer chinesischen Freunde (lila Leitung ist ein Jumper PC_EN - GND):
 ![Chinese one](docs/SBus_China.jpg "Kein Kommentar")
-Ja, sie haben ein kommerzielles Produkt mit einem ATMega168PA aus dieser Idee gemacht, sogar mit dem gleichen Konfiguratorprogramm. Verfügbar für ca. €12 bei Banggood (https://www.banggood.com/DIY-SBUS-To-PWMPPM-Decoder-16CH-For-Futaba-Orange-Frsky-p-987248.html). Aber das Teil benötigt immer noch den USB2SERIAL für die Konfiguration. Der Spannungsregler könnte Eingangsspannungen von bis zu 6,5 V vertragen (Datenblatt SR). Dies wäre für die meisten Servos ok (nicht für alle), aber bitte vorsichtig bleiben, wenn Relaismodule verwendet werden, die normalerweise nur 5 V akzeptieren. Leider hatte ich noch nicht die Zeit, um die V3.0 Firmware auf diesem Decoder zum Laufen zu bringen. Es kann jedoch weiterhin der SBUS Decoder Configurator mit V2 verwendet werden.
+Ja, sie haben ein kommerzielles Produkt mit einem ATMega168PA aus dieser Idee gemacht, sogar mit dem gleichen Konfiguratorprogramm. Verfügbar für ca. €12 bei Banggood (https://www.banggood.com/DIY-SBUS-To-PWMPPM-Decoder-16CH-For-Futaba-Orange-Frsky-p-987248.html). Aber das Teil benötigt immer noch den USB2SERIAL für die Konfiguration. Der Spannungsregler könnte Eingangsspannungen von bis zu 6,5 V vertragen (Datenblatt SR). Dies wäre für die meisten Servos ok (nicht für alle), aber bitte vorsichtig bleiben, wenn Relaismodule verwendet werden, die normalerweise nur 5 V akzeptieren. **Leider hatte ich noch nicht die Zeit, um die V3 Firmware auf diesem Decoder zum Laufen zu bringen. Es kann jedoch weiterhin der SBUS Decoder Configurator mit V2 verwendet werden.**
 
 ## Inverter
 Eine kurze Erklärung des Sbus-Protokolls finden Sie hier: https://github.com/bolderflight/SBUS/blob/master/README.md
-Das Protokoll verwendet eine invertierte serielle Logik und benötigt daher (erneut) einen Inverter, damit der Arduino mit den Daten arbeiten kann.
+Das Protokoll verwendet eine invertierte serielle Logik und benötigt daher (erneut) einen Inverter, damit der Arduino mit den Daten arbeiten kann. Für die meisten FrSky-Empfänger z.B. gibt es aber Informationen / Bilder im Internet aus denen die Position des uninvertierten Sbus ersichtlich ist. In diesem Fall kann auf den Inverter verzichtet werden.
 
 ### Hardware Inverter
 Viele Leute lassen diese Arbeit von einem Transistor und einigen Widerständen wie hier gezeigt erledigen (aus RCG):
@@ -73,7 +73,7 @@ Wie üblich kann das Programm mit der Arduino IDE geflasht werden. Selbstverstä
   * Schaltfläche "Write" clicken
 
 ## SBUS Decoderkonfigurator
-Die "Schalter" Version V3.0 beinhaltet Schalter-Funktionalität sowie eine kurze Anleitung (aus dem Programm der chinesischen Freunde) um den Decoder mit einem USB2SERIAL zu verbinden. Zusätzlich wurde eine Schaltfläche "Load Defaults" und eine Version-Schaltfläche hinzugefügt. Das Programm wurde mit Microsoft Visual C# geschrieben. Bank A und B arbeiten absolut unabhängig voneinander und es gibt keinen gegenseitigen Einfluss von irgendwelchen Einstellungen zwischen ihnen.
+Die "Schalter" Version V3 beinhaltet Schalter-Funktionalität sowie eine kurze Anleitung (aus dem Programm der chinesischen Freunde) um den Decoder mit einem USB2SERIAL zu verbinden. Zusätzlich wurde eine Schaltfläche "Load Defaults" und eine Version-Schaltfläche hinzugefügt. Das Programm wurde mit Microsoft Visual C# geschrieben. Bank A und B arbeiten absolut unabhängig voneinander und es gibt keinen gegenseitigen Einfluss von irgendwelchen Einstellungen zwischen ihnen.
 
 Um auf den S.Bus Decoder zuzugreifen, schließen Sie die USB2SERIAL-Adapter genauso an, als wenn die Firmware geflasht wird. Setzen des JP "Config Mode" (Pin A4 auf Masse (GND)) und reset / starten Sie den Arduino neu.
 
@@ -103,8 +103,16 @@ Im Konfigurationsmodus sollte die interne LED (Pin D13) nicht blinken.
 
 * Ch1 - Ch16: Die Ch-Nummer zeigt die Position des Signals in der Bank an. Die Dropdown-Liste ermöglicht die Auswahl der Kanalnummer aus den S.Bus-Daten. Es kann jeder Kanal, der gesendet wird, an einen der Ausgänge des Decoders umschaltet werden. In der Dropdown-Liste eines jeden Ausgangs kann auch der Wert "FS" auswählt werden. Wenn er auswählt wird, dann ist "Failsafe" für die Ausgabe festgelegt. Das Signal wird als PWM mit einer Pulslänge von 1000 μs oder 2000 μs ausgegeben.
 
-* Kontrollkästchen Schalter: Wenn nicht markiert, funktioniert der Decoder wie oben beschrieben. Wenn diese Option aktiviert ist, können die Kanäle von Bank A und B als Low / High-Ausgang ohne PWM-Signal auf der Leitung zugewiesen werden. Diese Ausgänge können dann zur Steuerung der Relaismodule verwendet werden. Es spielt keine Rolle, ob das Kontrollkästchen aktiv ist (aktiviert), solange die Kanäle leer bleiben. Ch8 ist blockiert und kann nur für den PWM (Servo) Betrieb verwendet werden.
+* Kontrollkästchen Schalter: Wenn nicht markiert, funktioniert der Decoder wie oben beschrieben. Wenn diese Option aktiviert ist, können die Kanäle von Bank A und B als Low / High-Ausgang ohne PWM-Signal auf der Leitung zugewiesen werden. Diese Ausgänge können dann zur Steuerung der Relaismodule verwendet werden. Es spielt keine Rolle, ob das Kontrollkästchen aktiv ist (aktiviert), solange die Kanäle leer bleiben. Ch 8, 9 und 10 sind blockiert und können nur für den PWM (Servo) Betrieb verwendet werden.
 
 Achtung: Nicht alle Empfänger senden ein Failsafe-Signal an den S.Bus. Bitte überprüfen, ob die Ausgangssignale des verwendeten Empfängers korrekt sind.
 
 Wenn der Synchronisierungsfehler (stk500_getsync ()) beim Hochladen der Firmware auftritt, die S.Bus-Leitung trennen durch Entfernen von JP "Inverter" zwischen Arduino und Inverter oder in der IDE den korrekten Arduino auswählen;).
+
+## Historie
+* V1 Veröffentlicht auf http://rc-master.ucoz.ru/publ/19-1-0-87
+* V2 Veröffentlicht auf https://github.com/mactep8/SBus_Decoder
+* V3 Ursprungsversion mit Schaltern
+* V3.1 Korrekturen:
+  * Ch9 und Ch10 nicht zur Benutzung als Schalter
+  * Schalt-Pins haben nun 0 Volt
