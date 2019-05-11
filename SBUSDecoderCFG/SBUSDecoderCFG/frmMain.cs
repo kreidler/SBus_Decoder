@@ -365,15 +365,15 @@ namespace SBUSDecoderCFG
                 conversion |= Convert.ToInt16(chkCH5.Checked) << 4;
                 conversion |= Convert.ToInt16(chkCH6.Checked) << 5;
                 conversion |= Convert.ToInt16(chkCH7.Checked) << 6;
-                conversion |= Convert.ToInt16(chkCH8.Checked = false) << 7;     // On pin D9 seems to be OCR1A
-                buff[41] = Convert.ToByte(conversion);                          // servo operation is ok
-                conversion = 0;                                                 // but no switching possible
+                conversion |= Convert.ToInt16(chkCH8.Checked) << 7;
+                buff[41] = Convert.ToByte(conversion);
+                conversion = 0;
                 conversion |= Convert.ToInt16(chkCH9.Checked = false) << 0;     // CH9 (D10) with OCR1B
                 conversion |= Convert.ToInt16(chkCH10.Checked = false) << 1;    // and CH10 (D11) with OCR2A
                 conversion |= Convert.ToInt16(chkCH11.Checked) << 2;            // do not provide the full voltage or 0V
-                conversion |= Convert.ToInt16(chkCH12.Checked) << 3;
-                conversion |= Convert.ToInt16(chkCH13.Checked) << 4;
-                conversion |= Convert.ToInt16(chkCH14.Checked) << 5;
+                conversion |= Convert.ToInt16(chkCH12.Checked) << 3;            // servo operation is ok
+                conversion |= Convert.ToInt16(chkCH13.Checked) << 4;            // but switching is not really possible
+                conversion |= Convert.ToInt16(chkCH14.Checked) << 5;            // whyever
                 conversion |= Convert.ToInt16(chkCH15.Checked) << 6;
                 conversion |= Convert.ToInt16(chkCH16.Checked) << 7;
                 buff[42] = Convert.ToByte(conversion);

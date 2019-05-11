@@ -1,12 +1,12 @@
-# SBus_Decoder V3.1
+# SBus_Decoder V3.11
 
 ## Einführung
 Dieses Projekt ermöglicht es einem Arduino, bis zu 16 Kanäle von jedem S.Bus-Empfänger zu empfangen, zu dekodieren und die Signale als 16 PWM-Signale (zum Anschluss von Servos oder Fahrtenreglern) und / oder bis zu zwei unabhängige PPM-Kanäle weiterzuleiten.
 Die Art der Ausgabe kann über eine Windows-Programm konfiguriert werden.
 
-V3 erweitert die Möglichkeiten mit einer Option für die RC-Funktionsmodellbau, um die Kanäle als "Schalter" für den Betrieb von bis zu 13 Standard-Relaismodulen (oder auch DC SSR / Darlington-Treiber) zu konfigurieren.
+V3 erweitert die Möglichkeiten mit einer Option für die RC-Funktionsmodellbau, um die Kanäle als "Schalter" für den Betrieb von bis zu 14 Standard-Relaismodulen (oder auch DC SSR / Darlington-Treiber) zu konfigurieren.
 
-* Anschluss von bis zu 16 Servos oder 13 Relaismodulen in freier Folge
+* Anschluss von bis zu 16 Servos oder 14 Relaismodulen in freier Folge
 * Generierung von bis zu 2 unabhängigen PPM-Signalen
 * Kodierung von bis zu 16 Kanälen in jedem PPM
 * Neuzuweisung von S.Bus-Kanälen an alle Ausgänge des Decoders und / oder an jede Stelle des PPM-Signals
@@ -103,7 +103,7 @@ Im Konfigurationsmodus sollte die interne LED (Pin D13) nicht blinken.
 
 * Ch1 - Ch16: Die Ch-Nummer zeigt die Position des Signals in der Bank an. Die Dropdown-Liste ermöglicht die Auswahl der Kanalnummer aus den S.Bus-Daten. Es kann jeder Kanal, der gesendet wird, an einen der Ausgänge des Decoders umschaltet werden. In der Dropdown-Liste eines jeden Ausgangs kann auch der Wert "FS" auswählt werden. Wenn er auswählt wird, dann ist "Failsafe" für die Ausgabe festgelegt. Das Signal wird als PWM mit einer Pulslänge von 1000 μs oder 2000 μs ausgegeben.
 
-* Kontrollkästchen Schalter: Wenn nicht markiert, funktioniert der Decoder wie oben beschrieben. Wenn diese Option aktiviert ist, können die Kanäle von Bank A und B als Low / High-Ausgang ohne PWM-Signal auf der Leitung zugewiesen werden. Diese Ausgänge können dann zur Steuerung der Relaismodule verwendet werden. Es spielt keine Rolle, ob das Kontrollkästchen aktiv ist (aktiviert), solange die Kanäle leer bleiben. Ch 8, 9 und 10 sind blockiert und können nur für den PWM (Servo) Betrieb verwendet werden.
+* Kontrollkästchen Schalter: Wenn nicht markiert, funktioniert der Decoder wie oben beschrieben. Wenn diese Option aktiviert ist, können die Kanäle von Bank A und B als Low / High-Ausgang ohne PWM-Signal auf der Leitung zugewiesen werden. Diese Ausgänge können dann zur Steuerung der Relaismodule verwendet werden. Es spielt keine Rolle, ob das Kontrollkästchen aktiv ist (aktiviert), solange die Kanäle leer bleiben. Ch 9 und 10 sind blockiert und können nur für den PWM (Servo) Betrieb verwendet werden.
 
 Achtung: Nicht alle Empfänger senden ein Failsafe-Signal an den S.Bus. Bitte überprüfen, ob die Ausgangssignale des verwendeten Empfängers korrekt sind.
 
@@ -116,3 +116,5 @@ Wenn der Synchronisierungsfehler (stk500_getsync ()) beim Hochladen der Firmware
 * V3.1 Korrekturen:
   * Ch9 und Ch10 nicht zur Benutzung als Schalter
   * Schalt-Pins haben nun 0 Volt
+* V3.11 Korrekturen:
+  * ch8 verfügbar als Schaltpin

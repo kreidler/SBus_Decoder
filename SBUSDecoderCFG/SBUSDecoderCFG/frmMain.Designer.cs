@@ -308,7 +308,6 @@
             // chkCH8
             // 
             this.chkCH8.AutoSize = true;
-            this.chkCH8.Enabled = false;
             this.chkCH8.Location = new System.Drawing.Point(190, 42);
             this.chkCH8.Name = "chkCH8";
             this.chkCH8.Size = new System.Drawing.Size(44, 17);
@@ -1871,7 +1870,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "frmMain";
-            this.Text = "s.BUS Decoder Configurator Switched V3.1";
+            this.Text = "s.BUS Decoder Configurator Switched V3.11";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
