@@ -405,7 +405,6 @@
             // chkCH9
             // 
             this.chkCH9.AutoSize = true;
-            this.chkCH9.Enabled = false;
             this.chkCH9.Location = new System.Drawing.Point(18, 19);
             this.chkCH9.Name = "chkCH9";
             this.chkCH9.Size = new System.Drawing.Size(59, 17);
@@ -436,7 +435,6 @@
             // chkCH10
             // 
             this.chkCH10.AutoSize = true;
-            this.chkCH10.Enabled = false;
             this.chkCH10.Location = new System.Drawing.Point(18, 42);
             this.chkCH10.Name = "chkCH10";
             this.chkCH10.Size = new System.Drawing.Size(65, 17);
@@ -1870,7 +1868,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "frmMain";
-            this.Text = "s.BUS Decoder Configurator Switched V3.11";
+            this.Text = "s.BUS Decoder Configurator Switched V3.12";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);

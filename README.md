@@ -1,12 +1,12 @@
-# SBus_Decoder V3.11
+# SBus_Decoder V3.12
 
 ## Introduction
 This project enables an Arduino to receive up to 16 channels send from any S.Bus receiver, decode them and forward the signals as 16 PWM signals (for connecting servos or ESC) and / or up to two independent PPM channels.
 The way of handling the output can be configured via a Windows application.
 
-V3 enhances the capabilites with an option for RC functional modelling to confiure the channels as "Switches" to drive up to 14 standard relay modules (or DC SSR / Darlington array also).
+V3 enhances the capabilites with an option for RC functional modelling to confiure all channels as "Switches" to drive up to 16 standard relay modules or DC SSR / Darlington arrays also.
 
-* Connection of up to 16 servos or 14 relay modules in mixed manner
+* Connection of up to 16 servos or 16 relay modules in mixed manner
 * Generation of up to 2 independent PPM signals
 * Encoding up to 16 channels in each PPM
 * Reassign s.Bus channels to any outputs of the decoder and / or to any location of the PPM signal
@@ -105,7 +105,7 @@ When in Config Mode the internal LED (Pin D13) should not blink.
 
 * Ch1 - Ch16: The Ch number indicates the position of the signal in the bank. The drop-down list allows to select the channel number from the S.Bus. You can switch any channel transmitted from the console to any of the decoder's outputs. In the drop-down list of each output, you can select the value "FS". Selecting this value means that the failsafe is set for output. The signal will be output as a PWM with a pulse length of 1000 μs or 2000 μs.
 
-* Checkbox Switches: If unchecked, the decoder will work described above. If checked, the Channels of Bank A and B can be assigned as low / high output without any PWM signal on the line. This output can be used to control the common Arduino relay modules. It does not matter if "Switches" is active (checked) as long as the channels will be left blank. Ch 9 and 10 are blocked and can be used for PWM (Servo) operation only.
+* Checkbox Switches: If unchecked, the decoder will work described above. If checked, the Channels of Bank A and B can be assigned as low / high output without any PWM signal on the line. This output can be used to control the common Arduino relay modules. It does not matter if "Switches" is active (checked) as long as the channels will be left blank.
 
 Attention: Not all receivers will send a communication loss signal to the S.Bus. Check that the output signals for your receiver are correct.
 
@@ -120,3 +120,5 @@ If getting the sync error (stk500_getsync()) while uploading firmware disconnect
   * Switching pins do have 0 volts now
 * V3.11 Corrections:
   * ch8 available as switching pin
+* V3.12 Correction:
+  * ch9 and ch10 available also (failure due to hardware defect)  
